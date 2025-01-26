@@ -1,7 +1,5 @@
-import com.android.ndkports.AndroidExecutableTestTask
 import com.android.ndkports.AutoconfPortTask
 import com.android.ndkports.CMakeCompatibleVersion
-import com.android.ndkports.MesonPortTask
 
 val portVersion = "1.5.0"
 
@@ -42,7 +40,7 @@ publishing {
             from(components["prefab"])
             pom {
                 name.set("webp")
-                description.set("WebP Codec\n")
+                description.set("WebP Codec")
                 url.set(
                     "https://chromium.googlesource.com/webm/libwebp"
                 )
