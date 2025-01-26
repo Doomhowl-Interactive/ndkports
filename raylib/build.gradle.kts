@@ -1,10 +1,9 @@
-import com.android.ndkports.AndroidExecutableTestTask
 import com.android.ndkports.CMakeCompatibleVersion
 import com.android.ndkports.CMakePortTask
 
 import java.io.File
 
-val portVersion = "5.5"
+val portVersion = "5.6"
 
 group = "com.raysan5"
 version = "$portVersion${rootProject.extra.get("snapshotSuffix")}"
@@ -26,7 +25,7 @@ tasks.register<CMakePortTask>("buildPort") {
         cmd += "-DCUSTOMIZE_BUILD=ON"
         cmd += "-DPLATFORM=Android"
         cmd += "-DBUILD_EXAMPLES=OFF"
-        cmd += "-DBUILD_SHARED_LIB=ON"
+        cmd += "-DBUILD_SHARED_LIBS=ON"
         cmd += "-DSUPPORT_FILEFORMAT_JPG=ON"
     }
 }
