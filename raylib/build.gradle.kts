@@ -23,6 +23,11 @@ ndkPorts {
 
 tasks.register<CMakePortTask>("buildPort") {
     cmake {
+        cmd += "-DCUSTOMIZE_BUILD=ON"
+        cmd += "-DPLATFORM=Android"
+        cmd += "-DBUILD_EXAMPLES=OFF"
+        cmd += "-DBUILD_SHARED_LIB=ON"
+        cmd += "-DSUPPORT_FILEFORMAT_JPG=ON"
     }
 }
 
