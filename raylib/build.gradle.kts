@@ -59,7 +59,7 @@ publishing {
                 }
                 scm {
                     url.set("https://github.com/raysan5/raylib")
-                    connection.set("scm:git:https://github.com/raysan5/raylib)
+                    connection.set("scm:git:https://github.com/raysan5/raylib")
                 }
             }
         }
