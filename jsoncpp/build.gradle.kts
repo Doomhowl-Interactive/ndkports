@@ -98,7 +98,7 @@ publishing {
 
     repositories {
         maven {
-            url = uri("${project.buildDir}/repository")
+            url = uri("${project.rootDir}/build/www")
         }
     }
 }
