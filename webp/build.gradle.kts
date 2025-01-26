@@ -1,4 +1,5 @@
 import com.android.ndkports.AndroidExecutableTestTask
+import com.android.ndkports.AutoconfPortTask
 import com.android.ndkports.CMakeCompatibleVersion
 import com.android.ndkports.MesonPortTask
 
@@ -19,7 +20,9 @@ ndkPorts {
     minSdkVersion.set(21)
 }
 
-val buildTask = tasks.register<MesonPortTask>("buildPort")
+tasks.register<AutoconfPortTask>("buildPort") {
+    autoconf
+}
 
 tasks.prefabPackage {
     version.set(CMakeCompatibleVersion.parse(portVersion))
