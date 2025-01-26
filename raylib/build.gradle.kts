@@ -1,7 +1,7 @@
 import com.android.ndkports.AndroidExecutableTestTask
-import com.android.ndkports.AutoconfPortTask
 import com.android.ndkports.CMakeCompatibleVersion
-import com.android.ndkports.MesonPortTask
+import com.android.ndkports.CMakePortTask
+
 import java.io.File
 
 val portVersion = "5.5"
@@ -21,7 +21,7 @@ ndkPorts {
     minSdkVersion.set(21)
 }
 
-tasks.register<AutoconfPortTask>("buildPort") {
+tasks.register<CMakePortTask>("buildPort") {
     cmake {
         args()
     }
