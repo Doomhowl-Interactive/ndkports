@@ -42,7 +42,7 @@ publishing {
             from(components["prefab"])
             pom {
                 name.set("webp")
-                description.set("WebP Codec\n")
+                description.set("WebP Codec")
                 url.set(
                     "https://chromium.googlesource.com/webm/libwebp"
                 )
