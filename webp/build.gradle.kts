@@ -1,7 +1,5 @@
-import com.android.ndkports.AndroidExecutableTestTask
 import com.android.ndkports.AutoconfPortTask
 import com.android.ndkports.CMakeCompatibleVersion
-import com.android.ndkports.MesonPortTask
 
 val portVersion = "1.5.0"
 
