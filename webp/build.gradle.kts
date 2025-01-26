@@ -29,6 +29,8 @@ tasks.register<AutoconfPortTask>("buildPort") {
 tasks.prefabPackage {
     version.set(CMakeCompatibleVersion.parse(portVersion))
 
+    licensePath.set("COPYING")
+
     modules {
         create("webp")
     }
@@ -40,25 +42,25 @@ publishing {
             from(components["prefab"])
             pom {
                 name.set("webp")
-                description.set("Libwebp for .webp image support.")
+                description.set("WebP Codec\n")
                 url.set(
-                    "https://android.googlesource.com/platform/tools/ndkports"
+                    "https://chromium.googlesource.com/webm/libwebp"
                 )
                 licenses {
                     license {
-                        name.set("fill in")
-                        url.set("")
+                        name.set("BSD 3-Clause License")
+                        url.set("https://chromium.googlesource.com/webm/libwebp/+/refs/heads/main/COPYING")
                         distribution.set("repo")
                     }
                 }
                 developers {
                     developer {
-                        name.set("Google")
+                        name.set("Google Inc.")
                     }
                 }
                 scm {
-                    url.set("https://android.googlesource.com/platform/tools/ndkports")
-                    connection.set("scm:git:https://android.googlesource.com/platform/tools/ndkports")
+                    url.set("https://chromium.googlesource.com/webm/libwebp")
+                    connection.set("scm:git:https://chromium.googlesource.com/webm/libwebp")
                 }
             }
         }
