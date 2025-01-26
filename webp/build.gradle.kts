@@ -5,7 +5,7 @@ import com.android.ndkports.MesonPortTask
 
 val portVersion = "1.5.0"
 
-group = "com.google.webp"
+group = "com.google"
 version = "$portVersion${rootProject.extra.get("snapshotSuffix")}"
 
 plugins {
