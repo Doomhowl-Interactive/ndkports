@@ -21,7 +21,9 @@ ndkPorts {
 }
 
 tasks.register<AutoconfPortTask>("buildPort") {
-    autoconf
+    autoconf {
+        args()
+    }
 }
 
 tasks.prefabPackage {
