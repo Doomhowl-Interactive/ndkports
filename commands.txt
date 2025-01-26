@@ -1,0 +1,1 @@
+./gradlew -PndkPath=/opt/android-sdk/ndk/28.0.12433566-beta1 build
