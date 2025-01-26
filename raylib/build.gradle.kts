@@ -21,7 +21,10 @@ ndkPorts {
     minSdkVersion.set(21)
 }
 
-tasks.register<CMakePortTask>("buildPort")
+tasks.register<CMakePortTask>("buildPort") {
+    cmake {
+    }
+}
 
 tasks.prefabPackage {
     version.set(CMakeCompatibleVersion.parse(portVersion))

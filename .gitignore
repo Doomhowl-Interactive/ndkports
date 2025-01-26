@@ -8,6 +8,8 @@
 /jsoncpp/build/
 /openssl/build/
 /webp/build/
+/raylib/build
+/raymob/build
 
 # Ignore Gradle GUI config
 gradle-app.setting
