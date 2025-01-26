@@ -22,7 +22,7 @@ ndkPorts {
 }
 
 tasks.register<AutoconfPortTask>("buildPort") {
-    autoconf {
+    cmake {
         args()
     }
 }
