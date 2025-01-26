@@ -20,7 +20,7 @@ dependencies {
 ndkPorts {
     ndkPath.set(File(project.findProperty("ndkPath") as String))
     source.set(project.file("src.tar.gz"))
-    minSdkVersion.set(21)
+    minSdkVersion.set(28)
 }
 
 tasks.prefab {
