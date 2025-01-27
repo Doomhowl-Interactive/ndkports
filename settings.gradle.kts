@@ -10,9 +10,5 @@ pluginManagement {
     }
 }
 
-include("curl")
-include("googletest")
-include("jsoncpp")
-include("openssl")
 include("webp")
 include("raylib")
