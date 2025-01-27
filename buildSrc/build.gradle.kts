@@ -55,7 +55,7 @@ gradlePlugin {
 publishing {
     repositories {
         maven {
-            url = uri("${project.rootDir}/build/www")
+            url = uri("${project.rootDir}/build/docs")
         }
     }
 }
