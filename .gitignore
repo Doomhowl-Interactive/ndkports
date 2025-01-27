@@ -9,6 +9,7 @@
 /openssl/build/
 /webp/build/
 /raylib/build
+/doomhowl/raylib/build
 /raymob/build
 /lua/build
 
