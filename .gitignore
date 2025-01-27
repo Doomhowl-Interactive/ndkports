@@ -10,6 +10,7 @@
 /webp/build/
 /raylib/build
 /raymob/build
+/lua/build
 
 # Ignore Gradle GUI config
 gradle-app.setting

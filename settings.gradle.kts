@@ -12,3 +12,4 @@ pluginManagement {
 
 include("webp")
 include("raylib")
+include("lua")
