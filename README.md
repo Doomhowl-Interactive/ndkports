@@ -1,3 +1,9 @@
+Hosted build results:
+- Maven repo: https://doomhowl-interactive.github.io/maven/
+- Repo: https://github.com/Doomhowl-Interactive/maven
+
+---
+
 # ndkports
 
 A collection of Android build scripts for various third-party libraries and the
