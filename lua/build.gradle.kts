@@ -38,7 +38,7 @@ tasks.prefabPackage {
     version.set(CMakeCompatibleVersion.parse(portVersion))
 
     modules {
-        create("lua")
+        create("lua_shared")
     }
 }
 
