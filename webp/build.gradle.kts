@@ -29,7 +29,18 @@ tasks.prefabPackage {
     licensePath.set("COPYING")
 
     modules {
-        create("webp")
+        create("sharpyuv")
+        create("webpdemux")
+        create("webpmux")
+        create("webp") {
+            dependencies.set(
+                listOf(
+                    "//webp:sharpyuv",
+                    "//webp:webpdemux",
+                    "//webp:webpmux"
+                )
+            )
+        }
     }
 }
 
