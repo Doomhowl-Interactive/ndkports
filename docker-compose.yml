@@ -1,0 +1,11 @@
+services:
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - sdk:/opt/android-sdk
+      - .:/worker
+      
+volumes:
+  sdk:
