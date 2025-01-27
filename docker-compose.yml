@@ -4,10 +4,8 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - worker:/worker
       - sdk:/opt/android-sdk
-      - ./build/www:/worker/build/www
-
+      - .:/worker
+      
 volumes:
-  worker:
   sdk:
