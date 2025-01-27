@@ -26,6 +26,7 @@ ndkPorts {
 
 tasks.register<CMakePortTask>("buildPort") {
     cmake {
+        cmd += "-DLUA_BUILD_AS_CXX=OFF"
         cmd += "-DLUA_USE_POSIX=OFF"
         cmd += "-DLUA_ENABLE_SHARED=ON"
         cmd += "-DLUA_BUILD_BINARY=OFF"
