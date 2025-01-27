@@ -16,5 +16,7 @@ RUN sdkmanager --install "ndk;r27c"
 RUN sdkmanager --install "platforms;android-35"
 
 WORKDIR /worker
+COPY . .
+
 ENTRYPOINT ["./gradlew", "--no-daemon", "--gradle-user-home=.gradle_home", "--stacktrace", "-PndkPath=/opt/android-sdk/ndk/r27c"]
-CMD ["-Prelease", "clean", "build", "-x", "test"]
+CMD ["-Prelease", "clean", "build"]
