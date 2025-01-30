@@ -27,6 +27,8 @@ ndkPorts {
 
 tasks.register<CMakePortTask>("buildPort") {
     cmake {
+        cmd += "-DBUILD_SHARED_LIBS=ON"
+        cmd += "-DLUNASVG_BUILD_EXAMPLES=OFF"
     }
 }
 
@@ -35,6 +37,7 @@ tasks.prefabPackage {
 
     modules {
         create("lunasvg")
+        create("plutovg")
     }
 }
 
