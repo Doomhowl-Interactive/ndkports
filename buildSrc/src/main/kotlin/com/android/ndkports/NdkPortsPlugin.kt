@@ -7,7 +7,6 @@ import org.gradle.api.artifacts.Configuration
 import org.gradle.api.attributes.Attribute
 import org.gradle.api.component.SoftwareComponentFactory
 import org.gradle.api.file.DirectoryProperty
-import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.plugins.BasePlugin
 import org.gradle.api.provider.Property
@@ -18,10 +17,8 @@ import javax.inject.Inject
 
 abstract class NdkPortsExtension {
     abstract val sourceTar: Property<File>
-    abstract val sourceRepoURL: Property<String>
-
-    abstract val ndkPath: DirectoryProperty
-
+    abstract val sourceGit: Property<GitSourceArgs>
+    abstract val ndkPath: DirectoryProperty // TODO: Use Property<File> and show error when not set
     abstract val minSdkVersion: Property<Int>
 }
 
@@ -91,13 +88,8 @@ class NdkPortsPluginImpl(
             "extractSrc", SourceExtractTask::class.java
         ) {
             with(it) {
-                if (extension.sourceTar.isPresent) {
-                    gitURL.set("")
-                    source.set(extension.sourceTar.get())
-                }
-                else {
-                    gitURL.set(extension.sourceRepoURL)
-                }
+                tarSource.set(extension.sourceTar)
+                gitSource.set(extension.sourceGit)
                 outDir.set(topBuildDir.resolve("src"))
             }
         }

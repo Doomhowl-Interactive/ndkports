@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
     ninja-build \
     openjdk-17-jdk \
     python3-pip \
+    git \
     zip && \
     apt-get clean
 

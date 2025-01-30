@@ -1,5 +1,6 @@
 import com.android.ndkports.CMakeCompatibleVersion
 import com.android.ndkports.CMakePortTask
+import com.android.ndkports.GitSourceArgs
 
 import java.io.File
 
@@ -17,7 +18,10 @@ plugins {
 
 ndkPorts {
     ndkPath.set(File(project.findProperty("ndkPath") as String))
-    sourceRepoURL.set(gitURL)
+    sourceGit.set(GitSourceArgs(
+        url = gitURL,
+        branch = "v${portVersion}"
+    ))
     minSdkVersion.set(21)
 }
 
