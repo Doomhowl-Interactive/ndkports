@@ -2,19 +2,9 @@
 .gradle
 /.gradle_home/
 /build/
-/buildSrc/build/
-/curl/build/
-/googletest/build/
-/jsoncpp/build/
-/openssl/build/
-/webp/build/
-/raylib/build
-/doomhowl/raylib/build
-/raymob/build
-/lua/build
-/lunasvg/build
+/**/build/
 
-gradle.properties
+local.properties
 
 # Ignore Gradle GUI config
 gradle-app.setting
