@@ -13,10 +13,12 @@ import org.gradle.api.plugins.BasePlugin
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.bundling.Zip
+import java.io.File
 import javax.inject.Inject
 
 abstract class NdkPortsExtension {
-    abstract val source: RegularFileProperty
+    abstract val sourceTar: RegularFileProperty
+    abstract val sourceRepoURL: Property<String>
 
     abstract val ndkPath: DirectoryProperty
 
@@ -89,7 +91,12 @@ class NdkPortsPluginImpl(
             "extractSrc", SourceExtractTask::class.java
         ) {
             with(it) {
-                source.set(extension.source)
+                if (extension.sourceTar.isPresent) {
+                    source.set(extension.sourceTar.get())
+                }
+                else {
+                    throw NotImplementedError("TODO: repo link support")
+                }
                 outDir.set(topBuildDir.resolve("src"))
             }
         }

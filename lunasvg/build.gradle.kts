@@ -3,9 +3,10 @@ import com.android.ndkports.CMakePortTask
 
 import java.io.File
 
-val portVersion = "5.6"
+val portVersion = "3.1.0"
+val gitURL = "https://github.com/sammycage/lunasvg.git"
 
-group = "com.doomhowl"
+group = "com.sammycage"
 version = "$portVersion${rootProject.extra.get("snapshotSuffix")}"
 
 plugins {
@@ -16,17 +17,12 @@ plugins {
 
 ndkPorts {
     ndkPath.set(File(project.findProperty("ndkPath") as String))
-    sourceTar.set(project.file("src.tar"))
+    sourceRepoURL.set(gitURL)
     minSdkVersion.set(21)
 }
 
 tasks.register<CMakePortTask>("buildPort") {
     cmake {
-        cmd += "-DCUSTOMIZE_BUILD=ON"
-        cmd += "-DPLATFORM=Android"
-        cmd += "-DBUILD_EXAMPLES=OFF"
-        cmd += "-DBUILD_SHARED_LIBS=ON"
-        cmd += "-DSUPPORT_FILEFORMAT_JPG=ON"
     }
 }
 
@@ -34,7 +30,7 @@ tasks.prefabPackage {
     version.set(CMakeCompatibleVersion.parse(portVersion))
 
     modules {
-        create("raylib")
+        create("lunasvg")
     }
 }
 
@@ -43,26 +39,26 @@ publishing {
         create<MavenPublication>("maven") {
             from(components["prefab"])
             pom {
-                name.set("raylib")
-                description.set("custom raylib fork to enjoy videogames programming")
+                name.set("lunasvg")
+                description.set("SVG rendering and manipulation library in C++")
                 url.set(
-                    "https://github.com/raysan5/raylib"
+                    gitURL
                 )
                 licenses {
                     license {
-                        name.set("Zlib license")
-                        url.set("https://github.com/Doomhowl-Interactive/raylib")
+                        name.set("MIT license")
+                        url.set("https://github.com/sammycage/lunasvg?tab=MIT-1-ov-file#readme")
                         distribution.set("repo")
                     }
                 }
                 developers {
                     developer {
-                        name.set("doomhowl")
+                        name.set("sammycage")
                     }
                 }
                 scm {
-                    url.set("https://github.com/Doomhowl-Interactive/raylib")
-                    connection.set("scm:git:https://github.com/Doomhowl-Interactive/raylib")
+                    url.set(gitURL)
+                    connection.set("scm:git:${gitURL}")
                 }
             }
         }
