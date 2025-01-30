@@ -17,7 +17,6 @@ plugins {
 }
 
 ndkPorts {
-    ndkPath.set(File(project.findProperty("ndkPath") as String))
     sourceGit.set(GitSourceArgs(
         url = gitURL,
         branch = "v${portVersion}"
