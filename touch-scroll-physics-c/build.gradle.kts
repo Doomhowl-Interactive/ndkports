@@ -32,6 +32,7 @@ tasks.register<CMakePortTask>("buildPort") {
 
 tasks.prefabPackage {
     version.set(CMakeCompatibleVersion.parse(portVersion))
+    licensePath.set("LICENSE.txt")
 
     modules {
         create("TouchScrollPhysics") {
