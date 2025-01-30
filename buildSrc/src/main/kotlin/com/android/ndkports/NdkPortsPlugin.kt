@@ -13,12 +13,12 @@ import org.gradle.api.provider.Property
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.bundling.Zip
 import java.io.File
+import java.util.Properties
 import javax.inject.Inject
 
 abstract class NdkPortsExtension {
     abstract val sourceTar: Property<File>
     abstract val sourceGit: Property<GitSourceArgs>
-    abstract val ndkPath: DirectoryProperty // TODO: Use Property<File> and show error when not set
     abstract val minSdkVersion: Property<Int>
 }
 
@@ -34,6 +34,8 @@ class NdkPortsPluginImpl(
 
     private var portTaskAdded: Boolean = false
     private val portTask = objects.property(PortTask::class.java)
+
+    private lateinit var ndkPathProp: DirectoryProperty;
     private lateinit var prefabTask: Provider<PrefabTask>
     private lateinit var extractTask: Provider<SourceExtractTask>
     private lateinit var packageTask: Provider<PackageBuilderTask>
@@ -44,6 +46,37 @@ class NdkPortsPluginImpl(
     private lateinit var consumedAars: Configuration
 
     private val artifactType = Attribute.of("artifactType", String::class.java)
+
+    private fun findNdkPath() {
+        try {
+            val prop = "ndk.dir"
+
+            var ndkPathStr = project.providers.gradleProperty(prop).getOrElse("")
+            if (ndkPathStr.isEmpty()) {
+                ndkPathStr = project.findProperty(prop) as? String ?: ""
+            }
+            if (ndkPathStr.isEmpty()) {
+                val localProperties = Properties()
+                val localPropertiesFile = project.rootProject.file("local.properties")
+
+                if (localPropertiesFile.exists()) {
+                    localPropertiesFile.inputStream().use { localProperties.load(it) }
+                }
+
+                ndkPathStr = localProperties.getProperty(prop)
+            }
+
+            if (ndkPathStr.isEmpty()) {
+                throw IllegalStateException("No ndkPath found in gradle.properties or local.properties!")
+            }
+
+            ndkPathProp = project.objects.directoryProperty().apply {
+                set(project.layout.projectDirectory.dir(ndkPathStr))
+            }
+        } catch (e: Exception) {
+            throw IllegalArgumentException("No ndkPath passed to Gradle or set in local.properties!", e)
+        }
+    }
 
     private fun createConfigurations() {
         implementation = project.configurations.create("implementation") {
@@ -79,7 +112,7 @@ class NdkPortsPluginImpl(
             with(it) {
                 aars = consumedAars.incoming.artifacts.artifactFiles
                 outputDirectory.set(topBuildDir.resolve("dependencies"))
-                ndkPath.set(extension.ndkPath)
+                ndkPath.set(ndkPathProp)
                 minSdkVersion.set(extension.minSdkVersion)
             }
         }
@@ -107,7 +140,7 @@ class NdkPortsPluginImpl(
             with(it) {
                 sourceDirectory.set(extractTask.get().outDir)
                 outDir.set(topBuildDir)
-                ndkPath.set(extension.ndkPath)
+                ndkPath.set(ndkPathProp)
                 installDirectory.set(portTask.get().installDir)
                 minSdkVersion.set(extension.minSdkVersion)
             }
@@ -131,9 +164,9 @@ class NdkPortsPluginImpl(
             portTaskAdded = true
             this.portTask.set(portTask)
 
-            with (portTask) {
+            with(portTask) {
                 sourceDirectory.set(extractTask.get().outDir)
-                ndkPath.set(extension.ndkPath)
+                ndkPath.set(ndkPathProp)
                 buildDir.set(topBuildDir)
                 minSdkVersion.set(extension.minSdkVersion)
                 prefabGenerated.set(prefabTask.get().generatedDirectory)
@@ -143,10 +176,10 @@ class NdkPortsPluginImpl(
         val testTasks =
             project.tasks.withType(AndroidExecutableTestTask::class.java)
         testTasks.whenTaskAdded { testTask ->
-            with (testTask) {
+            with(testTask) {
                 dependsOn(aarTask)
                 minSdkVersion.set(extension.minSdkVersion)
-                ndkPath.set(extension.ndkPath)
+                ndkPath.set(ndkPathProp)
             }
             project.tasks.getByName("check").dependsOn(testTask)
         }
@@ -162,6 +195,7 @@ class NdkPortsPluginImpl(
 
     fun apply() {
         project.pluginManager.apply(BasePlugin::class.java)
+        findNdkPath()
         createConfigurations()
         createTasks()
         createComponents()

@@ -13,7 +13,6 @@ plugins {
 }
 
 ndkPorts {
-    ndkPath.set(File(project.findProperty("ndkPath") as String))
     sourceTar.set(project.file("src.tar"))
     minSdkVersion.set(21)
 }

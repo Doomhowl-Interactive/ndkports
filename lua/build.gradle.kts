@@ -1,6 +1,3 @@
-
-
-
 import com.android.ndkports.CMakeCompatibleVersion
 import com.android.ndkports.CMakePortTask
 
@@ -19,7 +16,6 @@ plugins {
 }
 
 ndkPorts {
-    ndkPath.set(File(project.findProperty("ndkPath") as String))
     sourceTar.set(project.file("src.tar"))
     minSdkVersion.set(21)
 }
