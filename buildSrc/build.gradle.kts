@@ -9,6 +9,12 @@ plugins {
 group = "com.android.ndkports"
 version = "1.0.0-SNAPSHOT"
 
+tasks {
+    compileKotlin {
+        kotlinOptions.jvmTarget = "17"
+    }
+}
+
 repositories {
     mavenCentral()
     google()

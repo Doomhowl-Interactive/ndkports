@@ -12,6 +12,7 @@
 /doomhowl/raylib/build
 /raymob/build
 /lua/build
+/lunasvg/build
 
 gradle.properties
 
