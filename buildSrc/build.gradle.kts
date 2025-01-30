@@ -1,7 +1,7 @@
-val kotlinVersion = "1.7.10"
+val kotlinVersion = "1.9.20"
 
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.7.10"
+    id("org.jetbrains.kotlin.jvm") version "1.9.20"
     id("java-gradle-plugin")
     id("maven-publish")
 }
@@ -21,26 +21,12 @@ dependencies {
     implementation("com.google.prefab:api:1.1.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     implementation("org.redundent:kotlin-xml-builder:1.6.1")
+    implementation("com.github.sya-ri:kgit:1.1.0")
 
     testImplementation(kotlin("test", kotlinVersion))
     testImplementation(kotlin("test-junit", kotlinVersion))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
-}
-
-tasks {
-    compileJava {
-        @Suppress("UnstableApiUsage")
-        options.release.set(8)
-    }
-
-    compileKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-    }
-
-    compileTestKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-    }
 }
 
 gradlePlugin {
