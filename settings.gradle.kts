@@ -10,8 +10,8 @@ pluginManagement {
     }
 }
 
-include("webp")
-include("raylib")
-include("doomhowl:raylib")
+//include("webp")
+//include("raylib")
+//include("doomhowl:raylib")
 include("lua")
 include("lunasvg")

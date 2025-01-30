@@ -17,7 +17,7 @@ import java.io.File
 import javax.inject.Inject
 
 abstract class NdkPortsExtension {
-    abstract val sourceTar: RegularFileProperty
+    abstract val sourceTar: Property<File>
     abstract val sourceRepoURL: Property<String>
 
     abstract val ndkPath: DirectoryProperty
@@ -92,10 +92,11 @@ class NdkPortsPluginImpl(
         ) {
             with(it) {
                 if (extension.sourceTar.isPresent) {
+                    gitURL.set("")
                     source.set(extension.sourceTar.get())
                 }
                 else {
-                    throw NotImplementedError("TODO: repo link support")
+                    gitURL.set(extension.sourceRepoURL)
                 }
                 outDir.set(topBuildDir.resolve("src"))
             }
