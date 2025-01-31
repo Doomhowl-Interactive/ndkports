@@ -4,6 +4,9 @@
 /build/
 /**/build/
 
+*.~*
+*~
+        
 local.properties
 
 # Ignore Gradle GUI config

@@ -46,7 +46,7 @@ publishing {
         create<MavenPublication>("maven") {
             from(components["prefab"])
             pom {
-                name.set("touch-scroll-physics-c")
+                name.set("TouchScrollPhysics")
                 description.set("Quick port of a JavaScript scroll library to C.")
                 url.set(
                     gitURL
