@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+if [[ "$1" == "clean" ]]; then
+    ./gradlew --no-daemon clean -Prelease build
+else
+    ./gradlew --no-daemon -Prelease build
+fi
