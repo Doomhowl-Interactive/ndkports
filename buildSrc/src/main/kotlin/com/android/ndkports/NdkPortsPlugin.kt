@@ -48,8 +48,8 @@ class NdkPortsPluginImpl(
     private val artifactType = Attribute.of("artifactType", String::class.java)
 
     private fun findNdkPath() {
+        val prop = "ndkPath"
         try {
-            val prop = "ndk.dir"
 
             var ndkPathStr = project.providers.gradleProperty(prop).getOrElse("")
             if (ndkPathStr.isEmpty()) {
@@ -67,14 +67,14 @@ class NdkPortsPluginImpl(
             }
 
             if (ndkPathStr.isEmpty()) {
-                throw IllegalStateException("No ndkPath found in gradle.properties or local.properties!")
+                throw IllegalStateException("No $prop found in gradle.properties or local.properties!")
             }
 
             ndkPathProp = project.objects.directoryProperty().apply {
                 set(project.layout.projectDirectory.dir(ndkPathStr))
             }
         } catch (e: Exception) {
-            throw IllegalArgumentException("No ndkPath passed to Gradle or set in local.properties!", e)
+            throw IllegalArgumentException("No $prop passed to Gradle or set in local.properties!", e)
         }
     }
 

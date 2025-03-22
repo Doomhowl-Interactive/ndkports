@@ -23,17 +23,16 @@ abstract class SourceExtractTask : DefaultTask() {
 
     @TaskAction
     fun run() {
-
         if (tarSource.isPresent && gitSource.isPresent) {
             throw RuntimeException("Both source and gitSource are specified! Use one of the two.")
-        } else
-            if (tarSource.isPresent) {
-                extractTar(tarSource.get().absolutePath);
-            } else if (gitSource.isPresent) {
-                cloneGitRepo(gitSource.get())
-            } else {
-                throw RuntimeException("No source specified, must be either a tar file or a git URL")
-            }
+        }
+        if (tarSource.isPresent) {
+            extractTar(tarSource.get().absolutePath);
+        } else if (gitSource.isPresent) {
+            cloneGitRepo(gitSource.get())
+        } else {
+            throw RuntimeException("No source specified, must be either a tar file or a git URL")
+        }
     }
 
     private fun cloneGitRepo(args: GitSourceArgs) {
@@ -41,6 +40,7 @@ abstract class SourceExtractTask : DefaultTask() {
             setURI(args.url)
             setTimeout(60)
             setProgressMonitor(TextProgressMonitor())
+            setCloneSubmodules(true)
             setBranch(args.branch)
             setDepth(1)
             setDirectory(outDir.get().asFile)
