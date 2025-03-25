@@ -70,7 +70,7 @@ abstract class AdHocPortTask : PortTask() {
 
         for (run in builder.runs) {
             executeSubprocess(
-                run.cmd, buildDirectory, additionalEnvironment = run.env
+                run.cmd, sourceDirectory.get().asFile, additionalEnvironment = run.env
             )
         }
     }

@@ -10,9 +10,10 @@ pluginManagement {
     }
 }
 
-include("webp")
+//include("webp")
 include("raylib")
 include("doomhowl:raylib")
+include("freetype")
 include("lua")
 include("lunasvg")
 include("TouchScrollPhysics")
