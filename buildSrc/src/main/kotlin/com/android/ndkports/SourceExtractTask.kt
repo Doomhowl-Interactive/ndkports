@@ -41,7 +41,7 @@ abstract class SourceExtractTask : DefaultTask() {
         }
     }
 
-    private fun areMultipleSources() {
+    private fun areMultipleSources(): Boolean {
         var i = 0;
         if (tarSource.isPresent) i++
         if (gitSource.isPresent) i++
@@ -64,7 +64,7 @@ abstract class SourceExtractTask : DefaultTask() {
     private fun copyRawSource() {
         // delete recursively the outDir
         outDir.get().asFile.deleteRecursively()
-        rawSource.get().asFile.copyRecursively(outDir.get().asFile)
+        rawSource.get().absoluteFile.copyRecursively(outDir.get().asFile)
     }
 
     private fun extractTar(tarFile: String) {

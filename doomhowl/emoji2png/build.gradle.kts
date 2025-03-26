@@ -15,7 +15,21 @@ plugins {
 }
 
 ndkPorts {
+    sourceRaw.set(project.file("src"))
     minSdkVersion.set(21)
+}
+
+tasks.register<CMakePortTask>("buildPort") {
+    cmake {
+    }
+}
+
+tasks.prefabPackage {
+    version.set(CMakeCompatibleVersion.parse(portVersion))
+
+    modules {
+        create("emoji2png")
+    }
 }
 
 publishing {
