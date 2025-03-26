@@ -11,10 +11,11 @@ pluginManagement {
 }
 
 //include("webp")
-include("raylib")
-include("doomhowl:raylib")
+//include("raylib")
+//include("doomhowl:raylib")
 include("freetype")
-include("lua")
-include("lunasvg")
-include("TouchScrollPhysics")
-include("sioclient")
+include("doomhowl:emoji2png")
+//include("lua")
+//include("lunasvg")
+//include("TouchScrollPhysics")
+//include("sioclient")
