@@ -25,7 +25,6 @@
 
 namespace {
 
-const char* kDefaultOutputFile = "out.png";
 const int kBytesPerPixel = 4; // RGBA
 const int kDefaultPixelSize = 128;
 const int kSpaceWidth = kDefaultPixelSize / 2;
@@ -167,7 +166,7 @@ class FreeTypeFace {
   }
   bool DrawBitmap(DrawContext& context, FT_GlyphSlot slot) {
     int pixel_mode = slot->bitmap.pixel_mode;
-    if (pixel_mode == FT_PIXEL_MODE_BGRA)
+    if (pixel_mode == FT_PIXEL_MODE_LCD)
       DrawColorBitmap(context, slot);
     else
       DrawNormalBitmap(context, slot);
@@ -359,7 +358,7 @@ class App {
       font_list_.DrawCodepoint(draw_context_, c);
   }
   bool Output() {
-    PngWriter writer(kDefaultOutputFile);
+    PngWriter writer("out.png");
     return writer.Write(draw_context_.Bitmap(),
                         draw_context_.Width(),
                         draw_context_.Height());
@@ -380,11 +379,3 @@ bool Init() {
 }
 
 } // namespace
-
-int main(int argc, char** argv) {
-  if (!Init())
-    std::exit(1);
-  bool success = Start(argc, argv);
-  FT_Done_FreeType(gFtLibrary);
-  return success ? 0 : 1;
-}

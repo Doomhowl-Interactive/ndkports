@@ -19,5 +19,5 @@ repositories {
 }
 
 tasks.register("release") {
-    dependsOn(project.getTasksByName("distZip", true))
+    dependsOn(project.getTasksByName("clean", true), project.getTasksByName("distZip", true))
 }

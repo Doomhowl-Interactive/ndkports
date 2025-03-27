@@ -24,11 +24,29 @@ tasks.register<CMakePortTask>("buildPort") {
     }
 }
 
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("com.viliussutkus89.ndk.thirdparty:freetype-ndk26-shared:2.13.2-beta-8")
+}
+
 tasks.prefabPackage {
     version.set(CMakeCompatibleVersion.parse(portVersion))
 
+    dependencies.set(
+        mapOf(
+            "freetype" to "1",
+        )
+    )
+
     modules {
-        create("emoji2png")
+        create(name = "emoji2png") {
+            static.set(true)
+            licensePath.set("LICENSE")
+            dependencies.set(listOf("//freetype:freetype"))
+        }
     }
 }
 

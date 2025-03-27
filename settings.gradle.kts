@@ -13,7 +13,6 @@ pluginManagement {
 //include("webp")
 //include("raylib")
 //include("doomhowl:raylib")
-include("freetype")
 include("doomhowl:emoji2png")
 //include("lua")
 //include("lunasvg")
