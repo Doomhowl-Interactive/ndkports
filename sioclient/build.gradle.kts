@@ -15,6 +15,7 @@ version = "$portVersion${rootProject.extra.get("snapshotSuffix")}"
 plugins {
     id("maven-publish")
     id("com.android.ndkports.NdkPorts")
+    id("com.google.cloud.artifactregistry.gradle-plugin") version "2.2.0"
     distribution
 }
 
@@ -106,6 +107,15 @@ publishing {
         maven {
             url = uri("${project.rootDir}/build/docs")
         }
+        maven {
+            url = uri("artifactregistry://europe-west4-maven.pkg.dev/doomhowl-interactive/ndkports")
+        }
+    }
+}
+
+repositories {
+    maven {
+        url = uri("artifactregistry://europe-west4-maven.pkg.dev/doomhowl-interactive/ndkports")
     }
 }
 

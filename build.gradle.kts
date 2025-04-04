@@ -1,12 +1,6 @@
 buildscript {
-    val snapshotSuffix = if (hasProperty("release")) {
-        "-release"
-    } else {
-        "-debug"
-    }
-
     extra.apply {
-        set("snapshotSuffix", snapshotSuffix)
+        set("snapshotSuffix", "-SNAPSHOT")
     }
 }
 
@@ -14,8 +8,13 @@ group = "com.android"
 version = "1.0.0${extra.get("snapshotSuffix")}"
 
 repositories {
-    mavenCentral()
+    gradlePluginPortal()
     google()
+    mavenCentral()
+}
+
+plugins {
+    id("com.google.cloud.artifactregistry.gradle-plugin") version "2.2.0"
 }
 
 tasks.register("release") {
