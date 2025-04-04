@@ -11,7 +11,6 @@ version = "1.0.0-SNAPSHOT"
 
 tasks {
     compileKotlin {
-        kotlinOptions.jvmTarget = "17"
     }
 }
 

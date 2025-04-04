@@ -19,6 +19,7 @@ package com.android.ndkports
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import java.io.File
+import java.util.Properties
 
 class CMakeBuilder(val toolchain: Toolchain, val sysroot: File) :
     RunBuilder()
@@ -29,15 +30,37 @@ abstract class CMakePortTask : PortTask() {
 
     fun cmake(block: CMakeBuilder.() -> Unit) = cmake.set(block)
 
+    private val cmakeBinary: String;
+
+    init {
+        val localProperties = Properties()
+        val localPropertiesFile = project.rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            localPropertiesFile.inputStream().use { localProperties.load(it) }
+        }
+        cmakeBinary = localProperties.getProperty("cmakeBinary", "cmake")
+    }
+
     override fun buildForAbi(
         toolchain: Toolchain,
         workingDirectory: File,
         buildDirectory: File,
         installDirectory: File
     ) {
+        checkCMakeInstalled()
         configure(toolchain, buildDirectory, installDirectory)
         build(buildDirectory)
         install(buildDirectory)
+    }
+
+    private fun checkCMakeInstalled() {
+        try {
+            executeSubprocess(listOf(cmakeBinary, "--version"), File.createTempFile("cmake", "check").parentFile)
+        } catch (e: Exception) {
+            throw Exception(
+                "CMake not found. Please install CMake and add it to your PATH."
+            )
+        }
     }
 
     private fun configure(
@@ -53,10 +76,11 @@ abstract class CMakePortTask : PortTask() {
         val toolchainFile =
             toolchain.ndk.path.resolve("build/cmake/android.toolchain.cmake")
 
+
         buildDirectory.mkdirs()
         executeSubprocess(
             listOf(
-                "cmake",
+                cmakeBinary,
                 "-DCMAKE_TOOLCHAIN_FILE=${toolchainFile.absolutePath}",
                 "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
                 "-DCMAKE_INSTALL_PREFIX=${installDirectory.absolutePath}",

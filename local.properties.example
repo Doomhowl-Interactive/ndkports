@@ -1,0 +1,4 @@
+
+sdk.dir=/Users/bram/Library/Android/sdk
+ndkPath=/Users/bram/Library/Android/sdk/ndk/28.0.12433566
+cmakeBinary=/opt/homebrew/bin/cmake

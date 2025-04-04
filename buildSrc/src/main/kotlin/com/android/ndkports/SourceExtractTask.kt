@@ -26,6 +26,13 @@ abstract class SourceExtractTask : DefaultTask() {
         if (tarSource.isPresent && gitSource.isPresent) {
             throw RuntimeException("Both source and gitSource are specified! Use one of the two.")
         }
+
+        // skip if output directory already exists
+        if (outDir.get().asFile.exists() && outDir.get().asFileTree.files.isNotEmpty()) {
+            logger.lifecycle("Output directory already exists, skipping extraction.")
+            return
+        }
+
         if (tarSource.isPresent) {
             extractTar(tarSource.get().absolutePath);
         } else if (gitSource.isPresent) {
