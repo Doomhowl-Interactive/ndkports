@@ -14,6 +14,7 @@ pluginManagement {
 include("cpr")
 include("raylib")
 include("doomhowl:raylib")
+include("doomhowl:raygui")
 include("lua")
 include("lunasvg")
 include("TouchScrollPhysics")
