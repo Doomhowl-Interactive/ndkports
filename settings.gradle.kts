@@ -11,6 +11,7 @@ pluginManagement {
 }
 
 //include("webp")
+include("cpr")
 include("raylib")
 include("doomhowl:raylib")
 include("lua")
