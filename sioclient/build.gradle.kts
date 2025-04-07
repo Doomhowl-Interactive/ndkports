@@ -5,7 +5,7 @@ import com.android.ndkports.PrefabSysrootPlugin
 
 import java.io.File
 
-val portVersion = "3.2.0"
+val portVersion = "3.2.1"
 val gitURL = "https://github.com/Doomhowl-Interactive/socket.io-client-cpp"
 val developer = "socketio"
 
@@ -14,7 +14,7 @@ version = "$portVersion${rootProject.extra.get("snapshotSuffix")}"
 
 plugins {
     id("maven-publish")
-    id("com.android.ndkports.NdkPorts")
+    id("com.android.ndkports.NdkPorts") version "1.0.0-SNAPSHOT"
     id("com.google.cloud.artifactregistry.gradle-plugin") version "2.2.0"
     distribution
 }

@@ -8,10 +8,18 @@ pluginManagement {
             }
         }
     }
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        maven {
+            url = uri("https://europe-west4-maven.pkg.dev/doomhowl-interactive/ndkports")
+        }
+    }
 }
 
 //include("webp")
-include("cpr")
+//include("cpr")
 include("raylib")
 include("doomhowl:raylib")
 include("doomhowl:raygui")

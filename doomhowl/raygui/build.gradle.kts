@@ -5,7 +5,7 @@ import com.android.ndkports.PrefabSysrootPlugin
 
 import java.io.File
 
-val portVersion = "5.6"
+val portVersion = "5.6.1"
 val gitURL = "https://github.com/Doomhowl-Interactive/raygui"
 
 group = "com.doomhowl"
@@ -13,7 +13,7 @@ version = "$portVersion${rootProject.extra.get("snapshotSuffix")}"
 
 plugins {
     id("maven-publish")
-    id("com.android.ndkports.NdkPorts")
+    id("com.android.ndkports.NdkPorts") version "1.0.0-SNAPSHOT"
     id("com.google.cloud.artifactregistry.gradle-plugin") version "2.2.0"
     distribution
 }
