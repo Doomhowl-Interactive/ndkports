@@ -15,6 +15,7 @@ plugins {
 include ("ndkports")
 //include("webp")
 //include("cpr")
+include("boost")
 include("raylib")
 include("doomhowl:raylib")
 include("doomhowl:raygui")

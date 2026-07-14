@@ -83,7 +83,7 @@ publishing {
 distributions {
     main {
         contents {
-            from("${project.buildDir}/repository")
+            from(project.layout.buildDirectory.dir("repository"))
             include("**/*.aar")
             include("**/*.pom")
         }
@@ -93,6 +93,6 @@ distributions {
 tasks {
     distZip {
         dependsOn("publish")
-        destinationDirectory.set(File(rootProject.buildDir, "distributions"))
+        destinationDirectory.set(rootProject.layout.buildDirectory.dir("distributions"))
     }
 }

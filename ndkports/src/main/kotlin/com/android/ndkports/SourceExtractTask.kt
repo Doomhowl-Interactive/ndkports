@@ -1,7 +1,7 @@
 package com.android.ndkports
 
 import com.github.syari.kgit.KGit.Companion.cloneRepository
-import org.eclipse.jgit.lib.TextProgressMonitor
+import org.eclipse.jgit.lib.NullProgressMonitor
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
@@ -64,8 +64,8 @@ abstract class SourceExtractTask : DefaultTask() {
         cloneRepository {
             setURI(args.url)
             setTimeout(60)
-            setProgressMonitor(TextProgressMonitor())
-            setCloneSubmodules(true)
+            setProgressMonitor(NullProgressMonitor.INSTANCE)
+            setCloneSubmodules(args.cloneSubmodules)
             setBranch(args.branch)
             setDepth(1)
             setDirectory(outDir.get().asFile)
@@ -73,20 +73,6 @@ abstract class SourceExtractTask : DefaultTask() {
     }
 
     private fun extractTar(tarFile: String) {
-        // TODO: Cross-platform solution
-        val pb = ProcessBuilder(
-            listOf(
-                "tar",
-                "xf",
-                tarFile,
-                "--strip-components=1"
-            )
-        ).redirectErrorStream(true).directory(outDir.get().asFile)
-
-        val result = pb.start()
-        val output = result.inputStream.bufferedReader().use { it.readText() }
-        if (result.waitFor() != 0) {
-            throw RuntimeException("Subprocess failed with:\n$output")
-        }
+        PortIo.extractTar(File(tarFile), outDir.get().asFile, 1)
     }
 }

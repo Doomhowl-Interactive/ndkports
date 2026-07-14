@@ -1,9 +1,10 @@
-import com.android.ndkports.AutoconfPortTask
 import com.android.ndkports.CMakeCompatibleVersion
+import com.android.ndkports.GitSourceArgs
+import com.android.ndkports.HeaderOnlyPortTask
 
-val portVersion = "1.5.0"
+val portVersion = "1.87.0"
 
-group = "com.google"
+group = "org.boost"
 version = "$portVersion${rootProject.extra.get("snapshotSuffix")}"
 
 plugins {
@@ -13,23 +14,29 @@ plugins {
 }
 
 ndkPorts {
-    sourceTar.set(project.file("src.tar"))
+    sourceGit.set(
+        GitSourceArgs(
+            url = "https://github.com/boostorg/boost",
+            branch = "boost-${portVersion}",
+            cloneSubmodules = false
+        )
+    )
     minSdkVersion.set(21)
 }
 
-tasks.register<AutoconfPortTask>("buildPort") {
-    autoconf {
-        args()
-    }
+tasks.register<HeaderOnlyPortTask>("buildPort") {
+    sourceUrl.set("https://github.com/boostorg/boost/releases/download/boost-${portVersion}/boost-${portVersion}-cmake.tar.gz")
+    archiveStripComponents.set(1)
 }
 
 tasks.prefabPackage {
     version.set(CMakeCompatibleVersion.parse(portVersion))
-
-    licensePath.set("COPYING")
+    licensePath.set("LICENSE_1_0.txt")
 
     modules {
-        create("webp")
+        create("boost") {
+            headerOnly.set(true)
+        }
     }
 }
 
@@ -38,26 +45,24 @@ publishing {
         create<MavenPublication>("maven") {
             from(components["prefab"])
             pom {
-                name.set("webp")
-                description.set("WebP Codec")
-                url.set(
-                    "https://chromium.googlesource.com/webm/libwebp"
-                )
+                name.set("Boost C++ Libraries")
+                description.set("Boost provides free peer-reviewed portable C++ source libraries.")
+                url.set("https://www.boost.org/")
                 licenses {
                     license {
-                        name.set("BSD 3-Clause License")
-                        url.set("https://chromium.googlesource.com/webm/libwebp/+/refs/heads/main/COPYING")
+                        name.set("Boost Software License 1.0")
+                        url.set("https://www.boost.org/LICENSE_1_0.txt")
                         distribution.set("repo")
                     }
                 }
                 developers {
                     developer {
-                        name.set("Google Inc.")
+                        name.set("boostorg")
                     }
                 }
                 scm {
-                    url.set("https://chromium.googlesource.com/webm/libwebp")
-                    connection.set("scm:git:https://chromium.googlesource.com/webm/libwebp")
+                    url.set("https://github.com/boostorg/boost")
+                    connection.set("scm:git:https://github.com/boostorg/boost.git")
                 }
             }
         }
