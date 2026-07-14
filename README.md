@@ -1,47 +1,103 @@
-Hosted build results:
-- Maven repo: https://doomhowl-interactive.github.io/maven/
-- Repo: https://github.com/Doomhowl-Interactive/maven
-
----
-
 # ndkports
 
-A collection of Android build scripts for various third-party libraries and the
-tooling to build them.
+Pre-built Android AARs for popular C/C++ libraries, cross-compiled for all ABIs and packaged for [Prefab](https://google.github.io/prefab/).
 
-If you're an Android app developer looking to *consume* these libraries, this is
-probably not what you want. This project builds AARs to be published to Maven.
-You most likely want to use the AAR, not build it yourself.
+## Available libraries
 
-Note: Gradle support for consuming these artifacts from an AAR is a work in
-progress.
+| Library | Artifact | Prefab module | Header-only |
+|---|---|---|---|
+| Boost 1.87.0 | `boost` | `boost` | yes |
+| Lua 5.4.5 | `lua` | `lua_shared` | |
+| Raylib 5.6 | `raylib` | `raylib` | |
+| Raylib 5.6.1 (Doomhowl) | `doomhowl-raylib` | `raylib` | |
+| Raygui 5.6.1 (Doomhowl) | `doomhowl-raygui` | `raygui` | |
+| LunaSVG 3.1.0 | `lunasvg` | `lunasvg`, `plutovg` | |
+| CPR 1.11.3 | `cpr` | `cpr` | |
+| Socket.IO 3.2.1 | `sioclient` | `sioclient`, `sioclient_tls` | |
+| Protobuf 3.21.12 | `protobuf` | `protobuf` | |
+| GameNetworkingSockets 1.6.0 | `gamenetworkingsockets` | `GameNetworkingSockets` | |
+| TouchScrollPhysics 1.0.0 | `TouchScrollPhysics` | `TouchScrollPhysics` (static) | |
 
-## Ports
+Maven coordinate: `com.github.Doomhowl-Interactive.ndkports:<artifact>:<version>`
 
-Each third-party project is called a "port". Ports consist of a description of
-where to fetch the source, apply any patches needed, build, install, and package
-the library into an AAR.
+Replace `<version>` with a JitPack ref — a git tag, branch, or commit hash (e.g. `main-SNAPSHOT`).
 
-A port is a subclass of the abstract Kotlin class `com.android.ndkports.Port`.
-Projects define the name and version of the port, the URL to fetch source from,
-a list of modules (libraries) to build, and the build steps.
+## Consuming via JitPack
 
-See the [Port class] for documentation on the port API.
+### Gradle setup
 
-Individual port files are kept in `ports/$name/port.kts`. For example, the cURL
-port is [ports/curl/port.kts](ports/curl/port.kts).
+**`settings.gradle.kts`**
 
-[Port class]: src/main/kotlin/com/android/ndkports/Port.kt
+```kotlin
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven("https://jitpack.io")
+    }
+}
+```
 
-## Building a Port
+**`build.gradle.kts`**
 
-We recommend using the supplied scripts and Dockerfile for consistent builds.
+```kotlin
+android {
+    ndkVersion = "26.1.10909125"
+    defaultConfig {
+        minSdk = 26
+    }
+    buildFeatures {
+        prefab = true
+    }
+}
 
-To build a release for distribution to a Maven repo, `scripts/build_release.sh`
+dependencies {
+    implementation("com.github.Doomhowl-Interactive.ndkports:lua:main-SNAPSHOT")
+}
+```
 
-To build a snapshot, `scripts/build_snapshot.sh`
+### CMakeLists.txt
 
-You can also pass custom gradle targets: `scripts/build_snapshot.sh curl`
+```cmake
+cmake_minimum_required(VERSION 3.22.1)
 
-The scripts use the standard `ANDROID_NDK_ROOT` environment variable to
-locate the NDK. For example, `ANDROID_NDK_ROOT=/path/to/ndk scripts/build_release.sh`
+find_package(lua_shared REQUIRED CONFIG)
+
+add_library(myapp SHARED myapp.cpp)
+target_link_libraries(myapp lua_shared::lua_shared)
+```
+
+For header-only libraries like Boost:
+
+```cmake
+find_package(boost REQUIRED CONFIG)
+
+add_library(myapp SHARED myapp.cpp)
+target_link_libraries(myapp boost::boost)
+```
+
+The module name you pass to `find_package` is the **Prefab module** column from the table above.
+
+## Building locally
+
+Requirements:
+- Android NDK 26+
+- CMake 3.22+
+- ADB (optional, for on-device tests)
+
+Create `local.properties`:
+
+```properties
+sdk.dir=/path/to/Android/Sdk
+ndkPath=/path/to/Android/Sdk/ndk/26.1.10909125
+cmakeBinary=/path/to/cmake
+```
+
+Then build a port:
+
+```bash
+./gradlew :lua:publish
+```
+
+Output lands in `build/docs/`. To build a different port, replace `:lua:` with the artifact name (e.g. `:raylib:`, `:boost:`, `:doomhowl-raylib:`).
