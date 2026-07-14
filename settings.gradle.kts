@@ -12,7 +12,7 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.10.0"
 }
 
-include ("ndkports")
+includeBuild("ndkports")
 //include("webp")
 //include("cpr")
 include("boost")
@@ -25,3 +25,4 @@ include("TouchScrollPhysics")
 include("sioclient")
 include("protobuf")
 include("gamenetworkingsockets")
+include("range-v3")

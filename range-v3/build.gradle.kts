@@ -1,10 +1,11 @@
 import com.android.ndkports.CMakeCompatibleVersion
+import com.android.ndkports.CMakePortTask
 import com.android.ndkports.GitSourceArgs
-import com.android.ndkports.HeaderOnlyPortTask
 
-val portVersion = "1.87.0"
+val portVersion = "0.12.0"
+val gitURL = "https://github.com/ericniebler/range-v3"
 
-group = "org.boost"
+group = "com.ericniebler"
 version = "$portVersion${rootProject.extra.get("snapshotSuffix")}"
 
 plugins {
@@ -15,26 +16,29 @@ plugins {
 ndkPorts {
     sourceGit.set(
         GitSourceArgs(
-            url = "https://github.com/boostorg/boost",
-            branch = "boost-${portVersion}",
-            cloneSubmodules = false
+            url = gitURL,
+            branch = portVersion
         )
     )
     minSdkVersion.set(21)
 }
 
-tasks.register<HeaderOnlyPortTask>("buildPort") {
-    sourceUrl.set("https://archives.boost.io/release/${portVersion}/source/boost_${portVersion.replace(".", "_")}.tar.bz2")
-    archiveStripComponents.set(1)
-    headerDir.set("boost")
+tasks.register<CMakePortTask>("buildPort") {
+    cmake {
+        cmd += "-DRANGE_V3_TESTS=OFF"
+        cmd += "-DRANGE_V3_EXAMPLES=OFF"
+        cmd += "-DRANGE_V3_PERF=OFF"
+        cmd += "-DRANGE_V3_HEADER_CHECKS=OFF"
+        cmd += "-DRANGE_V3_DOCS=OFF"
+    }
 }
 
 tasks.prefabPackage {
     version.set(CMakeCompatibleVersion.parse(portVersion))
-    licensePath.set("LICENSE_1_0.txt")
+    licensePath.set("LICENSE.txt")
 
     modules {
-        create("boost") {
+        create("range-v3") {
             headerOnly.set(true)
         }
     }
@@ -45,24 +49,24 @@ publishing {
         create<MavenPublication>("maven") {
             from(components["prefab"])
             pom {
-                name.set("Boost C++ Libraries")
-                description.set("Boost provides free peer-reviewed portable C++ source libraries.")
-                url.set("https://www.boost.org/")
+                name.set("range-v3")
+                description.set("Range library for C++14/17/20, basis for C++20's std::ranges")
+                url.set(gitURL)
                 licenses {
                     license {
                         name.set("Boost Software License 1.0")
-                        url.set("https://www.boost.org/LICENSE_1_0.txt")
+                        url.set("https://github.com/ericniebler/range-v3/blob/master/LICENSE.txt")
                         distribution.set("repo")
                     }
                 }
                 developers {
                     developer {
-                        name.set("boostorg")
+                        name.set("ericniebler")
                     }
                 }
                 scm {
-                    url.set("https://github.com/boostorg/boost")
-                    connection.set("scm:git:https://github.com/boostorg/boost.git")
+                    url.set(gitURL)
+                    connection.set("scm:git:${gitURL}.git")
                 }
             }
         }

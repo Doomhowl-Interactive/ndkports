@@ -70,7 +70,7 @@ class PrefabPackageBuilder(
     private val modulesDirectory = prefabDirectory.resolve("modules")
 
     // TODO: Get from gradle.
-    private val packageName = "com.android.ndk.thirdparty.${packageData.name}"
+    private val packageName = "com.android.ndk.thirdparty.${packageData.name.replace("-", "_")}"
 
     private fun preparePackageDirectory() {
         if (packageDirectory.exists()) {
