@@ -11,9 +11,8 @@ group = "com.sammycage"
 version = "$portVersion${rootProject.extra.get("snapshotSuffix")}"
 
 plugins {
-    id("maven-publish")
+    id("ndkports-port-conventions")
     id("com.android.ndkports.NdkPorts") version "1.0.0-SNAPSHOT"
-    distribution
 }
 
 ndkPorts {
@@ -70,28 +69,5 @@ publishing {
                 }
             }
         }
-    }
-
-    repositories {
-        maven {
-            url = uri("${project.rootDir}/build/docs")
-        }
-    }
-}
-
-distributions {
-    main {
-        contents {
-            from(project.layout.buildDirectory.dir("repository"))
-            include("**/*.aar")
-            include("**/*.pom")
-        }
-    }
-}
-
-tasks {
-    distZip {
-        dependsOn("publish")
-        destinationDirectory.set(rootProject.layout.buildDirectory.dir("distributions"))
     }
 }

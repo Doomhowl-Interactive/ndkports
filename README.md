@@ -2,29 +2,29 @@
 
 Pre-built Android AARs for popular C/C++ libraries, cross-compiled for all ABIs and packaged for [Prefab](https://google.github.io/prefab/).
 
+Hosted at **[maven.doomhowl.com](https://maven.doomhowl.com)** — browse available artifacts in the Reposilite web UI.
+
 ## Available libraries
 
-| Library | Artifact | Prefab module | Header-only |
+| Library | Maven coordinate | Prefab module | Header-only |
 |---|---|---|---|
-| Boost 1.87.0 | `boost` | `boost` | yes |
-| Lua 5.4.5 | `lua` | `lua_shared` | |
-| Raylib 5.6 | `raylib` | `raylib` | |
-| Raylib 5.6.1 (Doomhowl) | `doomhowl-raylib` | `raylib` | |
-| Raygui 5.6.1 (Doomhowl) | `doomhowl-raygui` | `raygui` | |
-| LunaSVG 3.1.0 | `lunasvg` | `lunasvg`, `plutovg` | |
-| CPR 1.11.3 | `cpr` | `cpr` | |
-| Socket.IO 3.2.1 | `sioclient` | `sioclient`, `sioclient_tls` | |
-| Protobuf 3.21.12 | `protobuf` | `protobuf` | |
-| GameNetworkingSockets 1.6.0 | `gamenetworkingsockets` | `GameNetworkingSockets` | |
-| TouchScrollPhysics 1.0.0 | `TouchScrollPhysics` | `TouchScrollPhysics` (static) | |
+| Boost 1.87.0 | `org.boost:boost:1.87.0-SNAPSHOT` | `boost` | yes |
+| Lua 5.4.5 | `com.walterschell:lua:5.4.5-SNAPSHOT` | `lua_shared` | |
+| Raylib 5.6 | `com.raysan5:raylib:5.6-SNAPSHOT` | `raylib` | |
+| Raylib 5.6.1 (Doomhowl) | `com.doomhowl:raylib:5.6.1-SNAPSHOT` | `raylib` | |
+| Raygui 5.6.1 (Doomhowl) | `com.doomhowl:raygui:5.6.1-SNAPSHOT` | `raygui` | |
+| LunaSVG 3.1.0 | `com.sammycage:lunasvg:3.1.0-SNAPSHOT` | `lunasvg`, `plutovg` | |
+| CPR 1.11.3 | `com.libcpr:cpr:1.11.3-SNAPSHOT` | `cpr` | |
+| Socket.IO 3.2.1 | `com.socketio:sioclient:3.2.1-SNAPSHOT` | `sioclient`, `sioclient_tls` | |
+| Protobuf 3.21.12 | `com.google.protobuf:protobuf:3.21.12-SNAPSHOT` | `protobuf` | |
+| GameNetworkingSockets 1.6.0 | `com.valvesoftware:gamenetworkingsockets:1.6.0-SNAPSHOT` | `GameNetworkingSockets` | |
+| TouchScrollPhysics 1.0.0 | `com.bramtechs:TouchScrollPhysics:1.0.0-SNAPSHOT` | `TouchScrollPhysics` (static) | |
 
-Maven coordinate: `com.github.Doomhowl-Interactive.ndkports:<artifact>:<version>`
+All libraries are built for `armeabi-v7a`, `arm64-v8a`, `x86`, and `x86_64`. Minimum SDK is 21 (24 for CPR).
 
-Replace `<version>` with a JitPack ref — a git tag, branch, or commit hash (e.g. `main-SNAPSHOT`).
+## Usage
 
-## Consuming via JitPack
-
-### Gradle setup
+### Gradle
 
 **`settings.gradle.kts`**
 
@@ -34,7 +34,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven("https://jitpack.io")
+        maven("https://maven.doomhowl.com/releases")
     }
 }
 ```
@@ -45,7 +45,7 @@ dependencyResolutionManagement {
 android {
     ndkVersion = "26.1.10909125"
     defaultConfig {
-        minSdk = 26
+        minSdk = 21
     }
     buildFeatures {
         prefab = true
@@ -53,7 +53,7 @@ android {
 }
 
 dependencies {
-    implementation("com.github.Doomhowl-Interactive.ndkports:lua:main-SNAPSHOT")
+    implementation("com.walterschell:lua:5.4.5-SNAPSHOT")
 }
 ```
 
@@ -94,10 +94,23 @@ ndkPath=/path/to/Android/Sdk/ndk/26.1.10909125
 cmakeBinary=/path/to/cmake
 ```
 
-Then build a port:
+Publish a port to the local repository (`build/docs/`):
 
 ```bash
 ./gradlew :lua:publish
 ```
 
-Output lands in `build/docs/`. To build a different port, replace `:lua:` with the artifact name (e.g. `:raylib:`, `:boost:`, `:doomhowl-raylib:`).
+To build a different port, replace `:lua:` with the project name (e.g. `:raylib:`, `:boost:`, `:doomhowl:raygui:`).
+
+To publish to the hosted Reposilite instance, add credentials to `~/.gradle/gradle.properties`:
+
+```properties
+reposiliteUsername=<token>
+reposilitePassword=<secret>
+```
+
+Then run:
+
+```bash
+./gradlew publishAllPublicationsToReposiliteRepository
+```
