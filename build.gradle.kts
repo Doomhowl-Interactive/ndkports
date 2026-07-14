@@ -12,11 +12,3 @@ repositories {
     google()
     mavenCentral()
 }
-
-plugins {
-    id("com.google.cloud.artifactregistry.gradle-plugin") version "2.2.0"
-}
-
-tasks.register("release") {
-    dependsOn(project.getTasksByName("distZip", true))
-}

@@ -12,7 +12,6 @@ version = "$portVersion${rootProject.extra.get("snapshotSuffix")}"
 plugins {
     id("maven-publish")
     id("com.android.ndkports.NdkPorts") version "1.0.0-SNAPSHOT"
-    id("com.google.cloud.artifactregistry.gradle-plugin") version "2.2.0"
     distribution
 }
 
@@ -23,6 +22,7 @@ ndkPorts {
 
 tasks.register<CMakePortTask>("buildPort") {
     cmake {
+        cmd += "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
         cmd += "-DLUA_BUILD_AS_CXX=OFF"
         cmd += "-DLUA_USE_POSIX=OFF"
         cmd += "-DLUA_ENABLE_SHARED=ON"
@@ -74,15 +74,6 @@ publishing {
         maven {
             url = uri("${project.rootDir}/build/docs")
         }
-        maven {
-            url = uri("artifactregistry://europe-west4-maven.pkg.dev/doomhowl-interactive/ndkports")
-        }
-    }
-}
-
-repositories {
-    maven {
-        url = uri("artifactregistry://europe-west4-maven.pkg.dev/doomhowl-interactive/ndkports")
     }
 }
 
