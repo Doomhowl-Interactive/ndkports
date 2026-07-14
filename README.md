@@ -39,6 +39,19 @@ dependencyResolutionManagement {
 }
 ```
 
+**`settings.gradle`**
+
+```groovy
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://maven.doomhowl.com/releases' }
+    }
+}
+```
+
 **`build.gradle.kts`**
 
 ```kotlin
@@ -54,6 +67,24 @@ android {
 
 dependencies {
     implementation("com.walterschell:lua:5.4.5-SNAPSHOT")
+}
+```
+
+**`build.gradle`**
+
+```groovy
+android {
+    ndkVersion '26.1.10909125'
+    defaultConfig {
+        minSdk 21
+    }
+    buildFeatures {
+        prefab true
+    }
+}
+
+dependencies {
+    implementation 'com.walterschell:lua:5.4.5-SNAPSHOT'
 }
 ```
 
