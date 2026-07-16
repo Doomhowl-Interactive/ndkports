@@ -17,8 +17,9 @@ Hosted at **[maven.doomhowl.com](https://maven.doomhowl.com)** — browse availa
 | CPR 1.11.3 | `com.libcpr:cpr:1.11.3-SNAPSHOT` | `cpr` | |
 | Socket.IO 3.2.1 | `com.socketio:sioclient:3.2.1-SNAPSHOT` | `sioclient`, `sioclient_tls` | |
 | Protobuf 3.21.12 | `com.google.protobuf:protobuf:3.21.12-SNAPSHOT` | `protobuf` | |
-| GameNetworkingSockets 1.6.0 | `com.valvesoftware:gamenetworkingsockets:1.6.0-SNAPSHOT` | `GameNetworkingSockets` | |
+| GameNetworkingSockets 1.6.0 | `com.valvesoftware:GameNetworkingSockets:1.6.0-SNAPSHOT` | `GameNetworkingSockets` | |
 | TouchScrollPhysics 1.0.0 | `com.bramtechs:TouchScrollPhysics:1.0.0-SNAPSHOT` | `TouchScrollPhysics` (static) | |
+| magic_enum 0.9.8 | `com.neargye:magic_enum:0.9.8-SNAPSHOT` | `magic_enum` | yes |
 
 All libraries are built for `armeabi-v7a`, `arm64-v8a`, `x86`, and `x86_64`. Minimum SDK is 21 (24 for CPR).
 
