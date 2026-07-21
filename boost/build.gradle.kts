@@ -32,6 +32,7 @@ tasks.register<HeaderOnlyPortTask>("buildPort") {
 tasks.prefabPackage {
     version.set(CMakeCompatibleVersion.parse(portVersion))
     licensePath.set("LICENSE_1_0.txt")
+    packageName.set("Boost")
 
     modules {
         create("boost") {
