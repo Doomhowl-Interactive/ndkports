@@ -29,6 +29,7 @@ tasks.register<CMakePortTask>("buildPort") {
         cmd += "-Dprotobuf_BUILD_TESTS=OFF"
         cmd += "-Dprotobuf_BUILD_PROTOC_BINARIES=OFF"
         cmd += "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+        cmd += "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-z,max-page-size=16384"
     }
 }
 

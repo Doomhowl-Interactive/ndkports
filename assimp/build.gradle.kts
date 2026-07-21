@@ -45,6 +45,7 @@ tasks.register<AdHocPortTask>("buildPort") {
                 "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
                 "-DCMAKE_C_FLAGS=-DUSE_FILE32API",
                 "-DCMAKE_CXX_FLAGS=-DUSE_FILE32API",
+                "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-z,max-page-size=16384",
             ))
         }
 

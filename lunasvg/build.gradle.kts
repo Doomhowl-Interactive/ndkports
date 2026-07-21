@@ -29,6 +29,7 @@ tasks.register<CMakePortTask>("buildPort") {
     cmake {
         cmd += "-DBUILD_SHARED_LIBS=ON"
         cmd += "-DLUNASVG_BUILD_EXAMPLES=OFF"
+        cmd += "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-z,max-page-size=16384"
     }
 }
 

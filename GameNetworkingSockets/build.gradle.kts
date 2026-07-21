@@ -78,6 +78,7 @@ tasks.register<AdHocPortTask>("buildPort") {
                 "-DUSE_CRYPTO=OpenSSL",
                 "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
                 "-DCMAKE_CXX_FLAGS=-DLINUX",
+                "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-z,max-page-size=16384",
                 "-DOPENSSL_ROOT_DIR=$abiSysroot",
                 "-DOPENSSL_INCLUDE_DIR=$abiSysroot/include",
                 "-DOPENSSL_SSL_LIBRARY=$abiSysroot/lib/libssl.so",

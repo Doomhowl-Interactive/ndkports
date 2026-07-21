@@ -44,6 +44,7 @@ tasks.register<CMakePortTask>("buildPort") {
         cmd += "-DRAYLIB_INCLUDE_DIR=$sysroot/include"
         cmd += "-DRAYLIB_LIBRARIES=$sysroot/lib"
         cmd += "-DRAYLIB_LIBRARY=$sysroot/lib/libraylib.so"
+        cmd += "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-z,max-page-size=16384"
     }
 }
 

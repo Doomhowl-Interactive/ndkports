@@ -25,6 +25,7 @@ tasks.register<CMakePortTask>("buildPort") {
         cmd += "-DBUILD_EXAMPLES=OFF"
         cmd += "-DBUILD_SHARED_LIBS=ON"
         cmd += "-DSUPPORT_FILEFORMAT_JPG=ON"
+        cmd += "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-z,max-page-size=16384"
     }
 }
 

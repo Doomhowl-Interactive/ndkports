@@ -57,6 +57,7 @@ tasks.register<CMakePortTask>("buildPort") {
 
         // tell where cryptobro is located
         cmd += "-DOPENSSL_CRYPTO_LIBRARY=$sysroot/lib/libcrypto.so"
+        cmd += "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-z,max-page-size=16384"
     }
 }
 

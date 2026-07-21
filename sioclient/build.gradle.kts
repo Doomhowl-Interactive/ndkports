@@ -46,6 +46,7 @@ tasks.register<CMakePortTask>("buildPort") {
         cmd += "-DOPENSSL_ROOT_DIR=$sysroot"
         cmd += "-DOPENSSL_INCLUDE_DIR=$sysroot/include"
         cmd += "-DOPENSSL_LIBRARIES=$sysroot/lib"
+        cmd += "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-z,max-page-size=16384"
     }
 }
 

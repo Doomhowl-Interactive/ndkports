@@ -20,6 +20,7 @@ ndkPorts {
 tasks.register<AutoconfPortTask>("buildPort") {
     autoconf {
         args()
+        env["LDFLAGS"] = "-Wl,-z,max-page-size=16384"
     }
 }
 

@@ -28,6 +28,7 @@ tasks.register<CMakePortTask>("buildPort") {
         cmd += "-DLUA_BUILD_BINARY=OFF"
         cmd += "-DLUA_BUILD_COMPILER=OFF"
         cmd += "-DLUA_SUPPORT_DL=ON"
+        cmd += "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-z,max-page-size=16384"
     }
 }
 
